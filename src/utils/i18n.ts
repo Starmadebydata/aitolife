@@ -4,17 +4,41 @@ import { useRouter } from 'next/router';
 export const LANGUAGES = ['zh', 'en'];
 export const DEFAULT_LANGUAGE = 'zh';
 
+// 语言类型
+export type Language = 'zh' | 'en';
+
+// 翻译文件的命名空间
+export type Namespace = 'common';
+
+// 定义翻译数据的类型
+interface TranslationData {
+  [key: string]: any;
+}
+
+// 定义单个语言翻译的类型
+interface LanguageTranslations {
+  common: TranslationData;
+  [key: string]: TranslationData;
+}
+
+// 定义所有语言翻译的类型
+interface Translations {
+  zh: LanguageTranslations;
+  en: LanguageTranslations;
+  [key: string]: LanguageTranslations;
+}
+
 // 获取当前语言
-export const getCurrentLanguage = (locale?: string): string => {
+export const getCurrentLanguage = (locale?: string): Language => {
   if (locale && LANGUAGES.includes(locale)) {
-    return locale;
+    return locale as Language;
   }
-  return DEFAULT_LANGUAGE;
+  return DEFAULT_LANGUAGE as Language;
 };
 
 // 使用当前语言的钩子
 export const useLanguage = (): {
-  language: string;
+  language: Language;
   changeLanguage: (newLanguage: string) => void;
 } => {
   const router = useRouter();
@@ -33,7 +57,7 @@ export const useLanguage = (): {
 };
 
 // 导入翻译文件
-const importTranslation = (language: string, namespace: string) => {
+const importTranslation = (language: string, namespace: string): TranslationData => {
   try {
     // 导入对应的翻译文件
     return require(`../../public/locales/${language}/${namespace}.json`);
@@ -44,26 +68,26 @@ const importTranslation = (language: string, namespace: string) => {
 };
 
 // 预加载所有翻译，避免服务器和客户端不匹配
-const zhTranslations = {
+const zhTranslations: LanguageTranslations = {
   common: importTranslation('zh', 'common'),
 };
 
-const enTranslations = {
+const enTranslations: LanguageTranslations = {
   common: importTranslation('en', 'common'),
 };
 
-const translations = {
+const translations: Translations = {
   zh: zhTranslations,
   en: enTranslations,
 };
 
 // 翻译函数
-export const useTranslation = (namespace: string = 'common') => {
+export const useTranslation = (namespace: Namespace = 'common') => {
   const { language } = useLanguage();
   
   // 获取对应的翻译数据
-  const getTranslation = () => {
-    return translations[language as 'zh' | 'en'][namespace] || {};
+  const getTranslation = (): TranslationData => {
+    return translations[language][namespace] || {};
   };
   
   const currentTranslations = getTranslation();
