@@ -436,8 +436,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         tool: mockTools[slug],
-      },
-      revalidate: 3600, // 每小时重新生成一次
+      }
     };
   } catch (error) {
     console.error(`Error fetching tool with slug ${params?.slug}:`, error);
