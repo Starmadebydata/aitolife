@@ -72,7 +72,20 @@ export async function getAllPosts(preview: boolean = false): Promise<BlogPostFie
       include: 2,
     });
 
-    return entries.items.map((item) => item.fields as BlogPostFields);
+    // 使用类型断言并确保字段存在
+    return entries.items.map((item) => {
+      const fields = item.fields as Record<string, any>;
+      return {
+        title: fields.title || '',
+        slug: fields.slug || '',
+        excerpt: fields.excerpt || '',
+        content: fields.content || {},
+        coverImage: fields.coverImage || null,
+        date: fields.date || '',
+        author: fields.author || null,
+        category: fields.category || null,
+      } as BlogPostFields;
+    });
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return [];
@@ -88,7 +101,19 @@ export async function getPostBySlug(slug: string, preview: boolean = false): Pro
       include: 2,
     });
 
-    return entries.items[0]?.fields as BlogPostFields || null;
+    if (!entries.items.length) return null;
+    
+    const fields = entries.items[0].fields as Record<string, any>;
+    return {
+      title: fields.title || '',
+      slug: fields.slug || '',
+      excerpt: fields.excerpt || '',
+      content: fields.content || {},
+      coverImage: fields.coverImage || null,
+      date: fields.date || '',
+      author: fields.author || null,
+      category: fields.category || null,
+    } as BlogPostFields;
   } catch (error) {
     console.error(`Error fetching blog post with slug ${slug}:`, error);
     return null;
@@ -104,7 +129,21 @@ export async function getAllTools(preview: boolean = false): Promise<ToolFields[
       include: 2,
     });
 
-    return entries.items.map((item) => item.fields as ToolFields);
+    // 使用类型断言并确保字段存在
+    return entries.items.map((item) => {
+      const fields = item.fields as Record<string, any>;
+      return {
+        title: fields.title || '',
+        slug: fields.slug || '',
+        description: fields.description || '',
+        content: fields.content || {},
+        image: fields.image || null,
+        rating: fields.rating || 0,
+        pricingType: fields.pricingType || 'free',
+        externalUrl: fields.externalUrl || '',
+        categories: fields.categories || [],
+      } as ToolFields;
+    });
   } catch (error) {
     console.error('Error fetching tools:', error);
     return [];
@@ -120,7 +159,20 @@ export async function getToolBySlug(slug: string, preview: boolean = false): Pro
       include: 2,
     });
 
-    return entries.items[0]?.fields as ToolFields || null;
+    if (!entries.items.length) return null;
+    
+    const fields = entries.items[0].fields as Record<string, any>;
+    return {
+      title: fields.title || '',
+      slug: fields.slug || '',
+      description: fields.description || '',
+      content: fields.content || {},
+      image: fields.image || null,
+      rating: fields.rating || 0,
+      pricingType: fields.pricingType || 'free',
+      externalUrl: fields.externalUrl || '',
+      categories: fields.categories || [],
+    } as ToolFields;
   } catch (error) {
     console.error(`Error fetching tool with slug ${slug}:`, error);
     return null;
@@ -136,7 +188,17 @@ export async function getAllApplications(preview: boolean = false): Promise<Appl
       include: 2,
     });
 
-    return entries.items.map((item) => item.fields as ApplicationFields);
+    // 使用类型断言并确保字段存在
+    return entries.items.map((item) => {
+      const fields = item.fields as Record<string, any>;
+      return {
+        title: fields.title || '',
+        slug: fields.slug || '',
+        description: fields.description || '',
+        content: fields.content || {},
+        image: fields.image || null,
+      } as ApplicationFields;
+    });
   } catch (error) {
     console.error('Error fetching applications:', error);
     return [];
@@ -152,7 +214,16 @@ export async function getApplicationBySlug(slug: string, preview: boolean = fals
       include: 2,
     });
 
-    return entries.items[0]?.fields as ApplicationFields || null;
+    if (!entries.items.length) return null;
+    
+    const fields = entries.items[0].fields as Record<string, any>;
+    return {
+      title: fields.title || '',
+      slug: fields.slug || '',
+      description: fields.description || '',
+      content: fields.content || {},
+      image: fields.image || null,
+    } as ApplicationFields;
   } catch (error) {
     console.error(`Error fetching application with slug ${slug}:`, error);
     return null;
@@ -167,10 +238,15 @@ export async function getAllCategories(preview: boolean = false): Promise<Catego
       order: ['fields.title'],
     });
 
-    return entries.items.map((item) => ({
-      ...item.fields as CategoryFields,
-      sys: { id: item.sys.id }
-    }));
+    return entries.items.map((item) => {
+      const fields = item.fields as Record<string, any>;
+      return {
+        title: fields.title || '',
+        slug: fields.slug || '',
+        description: fields.description || '',
+        sys: { id: item.sys.id }
+      } as CategoryWithId;
+    });
   } catch (error) {
     console.error('Error fetching categories:', error);
     return [];
@@ -187,10 +263,13 @@ export async function getCategoryBySlug(slug: string, preview: boolean = false):
 
     if (!entries.items.length) return null;
 
+    const fields = entries.items[0].fields as Record<string, any>;
     return {
-      ...entries.items[0].fields as CategoryFields,
+      title: fields.title || '',
+      slug: fields.slug || '',
+      description: fields.description || '',
       sys: { id: entries.items[0].sys.id }
-    };
+    } as CategoryWithId;
   } catch (error) {
     console.error(`Error fetching category with slug ${slug}:`, error);
     return null;
@@ -211,7 +290,19 @@ export async function getPostsByCategory(categorySlug: string, preview: boolean 
       include: 2,
     });
 
-    return entries.items.map((item) => item.fields as BlogPostFields);
+    return entries.items.map((item) => {
+      const fields = item.fields as Record<string, any>;
+      return {
+        title: fields.title || '',
+        slug: fields.slug || '',
+        excerpt: fields.excerpt || '',
+        content: fields.content || {},
+        coverImage: fields.coverImage || null,
+        date: fields.date || '',
+        author: fields.author || null,
+        category: fields.category || null,
+      } as BlogPostFields;
+    });
   } catch (error) {
     console.error(`Error fetching posts for category ${categorySlug}:`, error);
     return [];
