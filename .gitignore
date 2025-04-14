@@ -38,3 +38,5 @@ next-env.d.ts
 # editor directories and files
 .idea
 .vscode
+.sublime-project
+.sublime-workspace
