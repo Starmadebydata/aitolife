@@ -127,6 +127,12 @@
     "share": "Share",
     "page_not_found": "Page Not Found",
     "page_not_found_message": "The page you are looking for doesn't exist or has been moved.",
-    "back_to_home": "Back to Home"
+    "back_to_home": "Back to Home",
+    "filters": "Filters",
+    "reset": "Reset",
+    "hide_filters": "Hide Filters",
+    "show_filters": "Show Filters",
+    "details": "Details",
+    "no_image": "No image available"
   }
 } 

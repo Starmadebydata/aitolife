@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "探索AI如何简化和改善日常生活的实用指南，包括家庭、健康、财务等多个领域的AI应用。",
+    "description": "探索AI如何简化和改善日常生活的实用指南，包括AI在家庭、健康、财务等领域的应用。",
     "keywords": "AI, 人工智能, 日常生活, 应用指南, 工具, 教程"
   },
   "nav": {
@@ -29,18 +29,18 @@
     "features_title": "为什么选择AIToLife",
     "features_subtitle": "我们致力于帮助您轻松融入AI时代",
     "feature1_title": "实用指南",
-    "feature1_description": "提供简明易懂的AI应用教程，无需技术背景也能轻松上手。",
+    "feature1_description": "提供易于理解的AI应用教程，无需技术背景，人人都能上手。",
     "feature2_title": "工具评测",
-    "feature2_description": "客观评测各类AI工具，帮助您找到最适合自己需求的解决方案。",
+    "feature2_description": "客观评估各类AI工具，帮助您找到最适合自己需求的解决方案。",
     "feature3_title": "生活应用",
     "feature3_description": "专注于AI在日常生活中的实际应用，而非抽象技术概念。",
-    "cta_title": "开始您的AI生活之旅",
-    "cta_description": "探索如何将AI技术融入日常生活，提升效率与生活品质。",
+    "cta_title": "开启您的AI生活之旅",
+    "cta_description": "探索如何将AI技术融入日常生活，提高效率和生活质量。",
     "cta_button": "立即开始",
     "learn_more": "了解更多",
-    "view_all_applications": "查看所有应用领域",
-    "view_all_tools": "查看所有工具",
-    "view_all_posts": "查看所有文章",
+    "view_all_applications": "查看全部应用领域",
+    "view_all_tools": "查看全部工具",
+    "view_all_posts": "查看全部文章",
     "read_more": "阅读更多"
   },
   "footer": {
@@ -57,14 +57,14 @@
     "guides": "入门指南",
     "newsletter": "订阅通讯",
     "newsletter_desc": "获取最新的AI应用技巧和工具推荐",
-    "email_placeholder": "您的电子邮箱",
+    "email_placeholder": "您的邮箱",
     "subscribe": "订阅",
-    "rights": "保留所有权利"
+    "rights": "版权所有"
   },
   "blog": {
     "title": "博客",
     "subtitle": "探索AI应用的最新趋势和实用技巧",
-    "read_more": "阅读全文",
+    "read_more": "阅读更多",
     "comments": "评论",
     "related_posts": "相关文章",
     "categories": "分类",
@@ -74,7 +74,7 @@
     "updated_on": "更新于",
     "written_by": "作者",
     "reading_time": "阅读时间",
-    "no_posts": "暂无文章"
+    "no_posts": "未找到文章"
   },
   "tools": {
     "title": "AI工具目录",
@@ -83,7 +83,7 @@
     "filter_free": "免费",
     "filter_freemium": "免费增值",
     "filter_paid": "付费",
-    "filter_subscription": "订阅",
+    "filter_subscription": "订阅制",
     "sort_by": "排序方式",
     "sort_rating": "评分",
     "sort_newest": "最新",
@@ -95,7 +95,7 @@
     "pros": "优点",
     "cons": "缺点",
     "alternatives": "替代工具",
-    "no_tools": "暂无工具"
+    "no_tools": "未找到工具"
   },
   "applications": {
     "title": "AI应用领域",
@@ -104,29 +104,35 @@
     "use_cases": "使用场景",
     "getting_started": "入门指南",
     "read_more": "阅读更多",
-    "no_applications": "暂无应用领域"
+    "no_applications": "未找到应用领域"
   },
   "theme": {
-    "switch_to_dark": "切换到暗色模式",
-    "switch_to_light": "切换到亮色模式"
+    "switch_to_dark": "切换到深色模式",
+    "switch_to_light": "切换到浅色模式"
   },
   "common": {
-    "loading": "加载中...",
-    "error": "出错了",
+    "loading": "加载中",
+    "error": "错误",
     "try_again": "重试",
     "search": "搜索",
     "search_placeholder": "搜索内容...",
-    "no_results": "没有找到结果",
+    "no_results": "未找到结果",
     "back": "返回",
-    "next": "下一页",
-    "previous": "上一页",
-    "page": "页",
+    "next": "下一步",
+    "previous": "上一步",
+    "page": "页面",
     "of": "共",
     "copy": "复制",
     "copied": "已复制",
     "share": "分享",
     "page_not_found": "页面未找到",
-    "page_not_found_message": "您访问的页面不存在或已被删除。",
-    "back_to_home": "返回首页"
+    "page_not_found_message": "您查找的页面不存在或已被移动。",
+    "back_to_home": "返回首页",
+    "filters": "筛选条件",
+    "reset": "重置",
+    "hide_filters": "隐藏筛选",
+    "show_filters": "显示筛选",
+    "details": "详细信息",
+    "no_image": "无图片"
   }
 } 
