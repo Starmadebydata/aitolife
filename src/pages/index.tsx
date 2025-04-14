@@ -402,7 +402,6 @@ export const getStaticProps: GetStaticProps = async () => {
           en: enApplications
         },
       },
-      revalidate: 60 * 60, // 每小时重新生成
     };
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -413,7 +412,6 @@ export const getStaticProps: GetStaticProps = async () => {
         tools: { zh: [], en: [] },
         applications: { zh: [], en: [] },
       },
-      revalidate: 60 * 60,
     };
   }
 };
