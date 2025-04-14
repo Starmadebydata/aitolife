@@ -8,7 +8,7 @@ interface ToolCardProps {
   title: string;
   description: string;
   slug: string;
-  image?: string;
+  image?: string | null;
   rating: number;
   pricingType: 'free' | 'freemium' | 'paid' | 'subscription';
   externalUrl?: string;
