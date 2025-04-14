@@ -16,6 +16,8 @@
 # misc
 .DS_Store
 *.pem
+# macOS元数据文件
+._*
 
 # debug
 npm-debug.log*

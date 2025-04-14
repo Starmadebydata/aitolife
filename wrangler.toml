@@ -2,17 +2,16 @@ name = "aitolife"
 compatibility_date = "2023-06-15"
 compatibility_flags = ["nodejs_compat"]
 
-[site]
-bucket = ".vercel/output/static"
+# Cloudflare Pages 输出目录配置
+pages_build_output_dir = ".vercel/output/static"
 
 [build]
 command = "npx @cloudflare/next-on-pages@1"
-watch_dir = "src"
 
 [env.production]
 NODE_ENV = "production"
 
-[env.development]
+[env.preview]
 NODE_ENV = "development"
 
 # 配置国际化处理，确保语言切换路由正常工作
