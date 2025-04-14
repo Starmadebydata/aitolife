@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html>
       <Head>
+        <link rel="icon" href="/favicon.ico" />
         {/* 添加网站图标 */}
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -11,7 +12,7 @@ export default function Document() {
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
         <meta name="msapplication-TileColor" content="#0284c7" />
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#0284c7" />
 
         {/* 预连接到Contentful图片域 */}
         <link rel="preconnect" href="https://images.ctfassets.net" />
