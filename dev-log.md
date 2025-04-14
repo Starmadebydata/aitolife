@@ -117,6 +117,11 @@ AIToLife 是一个介绍 AI 在日常生活应用的平台，旨在帮助用户�
    - 解决 ISR 与静态导出模式不兼容的问题
    - 添加 Google Analytics 和 Consent Manager 跟踪脚本
 
+5. **部署平台迁移**
+   - 将网站从 Cloudflare Pages 迁移至 Vercel 托管
+   - 保留 Cloudflare DNS 管理，利用其安全和缓存优势
+   - 解决了静态导出限制，支持 Next.js 的所有高级功能
+
 ### 遇到的问题和解决方案
 
 1. **类型错误**：工具卡片组件的 image 属性类型与传入的 null 值不兼容
@@ -124,9 +129,11 @@ AIToLife 是一个介绍 AI 在日常生活应用的平台，旨在帮助用户�
 
 2. **构建失败**：Cloudflare Pages 无法构建带有 ISR (revalidate) 参数的页面
    - 解决方案：移除 getStaticProps 中的 revalidate 参数，以兼容静态导出模式
+   - 最终解决：迁移到 Vercel，原生支持 ISR 和 Next.js 全部功能
 
 3. **数据更新策略**：静态生成的内容无法实时更新
    - 解决方案：计划使用 Supabase 数据库实现动态内容管理
+   - 迁移到 Vercel 后，可以结合 ISR 和数据库查询获得更好的性能和实时性
 
 ### 下一步计划
 
