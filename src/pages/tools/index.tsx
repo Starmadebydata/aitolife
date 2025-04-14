@@ -25,7 +25,7 @@ interface Tool {
   title: string;
   slug: string;
   description: string;
-  image?: string;
+  image?: string | null;
   rating: number;
   pricingType: 'free' | 'freemium' | 'paid' | 'subscription';
   externalUrl?: string;

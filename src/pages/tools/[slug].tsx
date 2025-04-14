@@ -18,7 +18,7 @@ interface Tool {
   slug: string;
   description: string;
   content: ToolContent;
-  image?: string;
+  image?: string | null;
   rating: number;
   pricingType: 'free' | 'freemium' | 'paid' | 'subscription';
   externalUrl?: string;
