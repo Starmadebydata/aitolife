@@ -124,6 +124,9 @@
     "of": "of",
     "copy": "Copy",
     "copied": "Copied",
-    "share": "Share"
+    "share": "Share",
+    "page_not_found": "Page Not Found",
+    "page_not_found_message": "The page you are looking for doesn't exist or has been moved.",
+    "back_to_home": "Back to Home"
   }
 } 
