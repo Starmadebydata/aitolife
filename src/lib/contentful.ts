@@ -68,7 +68,7 @@ export async function getAllPosts(preview: boolean = false): Promise<BlogPostFie
   try {
     const entries = await getClient(preview).getEntries({
       content_type: 'blogPost',
-      order: '-fields.date',
+      order: ['-fields.date'],
       include: 2,
     });
 
@@ -100,7 +100,7 @@ export async function getAllTools(preview: boolean = false): Promise<ToolFields[
   try {
     const entries = await getClient(preview).getEntries({
       content_type: 'tool',
-      order: '-fields.rating',
+      order: ['-fields.rating'],
       include: 2,
     });
 
@@ -132,7 +132,7 @@ export async function getAllApplications(preview: boolean = false): Promise<Appl
   try {
     const entries = await getClient(preview).getEntries({
       content_type: 'application',
-      order: 'fields.title',
+      order: ['fields.title'],
       include: 2,
     });
 
@@ -164,7 +164,7 @@ export async function getAllCategories(preview: boolean = false): Promise<Catego
   try {
     const entries = await getClient(preview).getEntries({
       content_type: 'category',
-      order: 'fields.title',
+      order: ['fields.title'],
     });
 
     return entries.items.map((item) => ({
@@ -207,7 +207,7 @@ export async function getPostsByCategory(categorySlug: string, preview: boolean 
     const entries = await getClient(preview).getEntries({
       content_type: 'blogPost',
       'fields.category.sys.id': category.sys.id,
-      order: '-fields.date',
+      order: ['-fields.date'],
       include: 2,
     });
 
