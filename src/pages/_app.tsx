@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import { LANGUAGES, DEFAULT_LANGUAGE } from '@utils/i18n';
 import '@styles/globals.css';
 
@@ -47,7 +48,40 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, [router.events, router.pathname]);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      {/* Consent Manager */}
+      <Script
+        id="consent-manager"
+        strategy="beforeInteractive"
+        type="text/javascript"
+        data-cmp-ab="1"
+        src="https://cdn.consentmanager.net/delivery/autoblocking/c3374ac35212f.js"
+        data-cmp-host="c.delivery.consentmanager.net"
+        data-cmp-cdn="cdn.consentmanager.net"
+        data-cmp-codesrc="16"
+      />
+      
+      {/* Google Analytics */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-87F33BN32C"
+      />
+      <Script
+        id="google-analytics"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-87F33BN32C');
+          `,
+        }}
+      />
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default MyApp;
