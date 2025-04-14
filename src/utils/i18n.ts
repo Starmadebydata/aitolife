@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+import React from 'react';
 
 // 支持的语言
 export const LANGUAGES = ['zh', 'en'];
@@ -7,95 +7,74 @@ export const DEFAULT_LANGUAGE = 'zh';
 // 语言类型
 export type Language = 'zh' | 'en';
 
-// 翻译文件的命名空间
+// 命名空间类型
 export type Namespace = 'common';
 
-// 定义翻译数据的类型
-interface TranslationData {
-  [key: string]: any;
-}
-
-// 定义单个语言翻译的类型
-interface LanguageTranslations {
-  common: TranslationData;
-  [key: string]: TranslationData;
-}
-
-// 定义所有语言翻译的类型
-interface Translations {
-  zh: LanguageTranslations;
-  en: LanguageTranslations;
-  [key: string]: LanguageTranslations;
-}
-
-// 获取当前语言
-export const getCurrentLanguage = (locale?: string): Language => {
-  if (locale && LANGUAGES.includes(locale)) {
-    return locale as Language;
-  }
-  return DEFAULT_LANGUAGE as Language;
-};
+// 翻译数据类型
+export type TranslationData = Record<string, any>;
 
 // 使用当前语言的钩子
 export const useLanguage = (): {
   language: Language;
   changeLanguage: (newLanguage: string) => void;
 } => {
-  const router = useRouter();
-  const { locale } = router;
+  const [language, setLanguage] = React.useState<Language>(DEFAULT_LANGUAGE);
   
-  const language = getCurrentLanguage(locale);
+  // 在组件挂载时初始化语言
+  React.useEffect(() => {
+    // 尝试从 localStorage 获取语言设置
+    const savedLanguage = localStorage.getItem('aitolife_language');
+    if (savedLanguage && LANGUAGES.includes(savedLanguage)) {
+      setLanguage(savedLanguage as Language);
+    } else {
+      // 如果没有保存的语言，使用浏览器语言或默认语言
+      const browserLanguage = navigator.language.split('-')[0];
+      const initialLanguage = LANGUAGES.includes(browserLanguage) 
+        ? browserLanguage as Language 
+        : DEFAULT_LANGUAGE;
+      setLanguage(initialLanguage);
+      localStorage.setItem('aitolife_language', initialLanguage);
+    }
+  }, []);
   
   // 切换语言
   const changeLanguage = (newLanguage: string) => {
     if (!LANGUAGES.includes(newLanguage)) return;
     
-    router.push(router.pathname, router.asPath, { locale: newLanguage });
+    setLanguage(newLanguage as Language);
+    localStorage.setItem('aitolife_language', newLanguage);
+    
+    // 强制刷新组件以应用新的语言
+    window.location.reload();
   };
   
   return { language, changeLanguage };
 };
 
-// 导入翻译文件
-const importTranslation = (language: string, namespace: string): TranslationData => {
-  try {
-    // 导入对应的翻译文件
-    return require(`../../public/locales/${language}/${namespace}.json`);
-  } catch (error) {
-    console.error(`Failed to load translation file for ${language}/${namespace}`, error);
-    return {};
-  }
-};
-
-// 预加载所有翻译，避免服务器和客户端不匹配
-const zhTranslations: LanguageTranslations = {
-  common: importTranslation('zh', 'common'),
-};
-
-const enTranslations: LanguageTranslations = {
-  common: importTranslation('en', 'common'),
-};
-
-const translations: Translations = {
-  zh: zhTranslations,
-  en: enTranslations,
-};
-
 // 翻译函数
 export const useTranslation = (namespace: Namespace = 'common') => {
   const { language } = useLanguage();
+  const [translations, setTranslations] = React.useState<TranslationData>({});
   
-  // 获取对应的翻译数据
-  const getTranslation = (): TranslationData => {
-    return translations[language][namespace] || {};
-  };
-  
-  const currentTranslations = getTranslation();
+  React.useEffect(() => {
+    // 动态加载对应语言的翻译文件
+    const loadTranslations = async () => {
+      try {
+        const translationModule = await import(`../../public/locales/${language}/${namespace}.json`);
+        setTranslations(translationModule.default || {});
+      } catch (error) {
+        console.error(`Failed to load translation file for ${language}/${namespace}`, error);
+        setTranslations({});
+      }
+    };
+    
+    loadTranslations();
+  }, [language, namespace]);
   
   // 翻译函数
   const t = (key: string, params?: Record<string, string>): string => {
     const keys = key.split('.');
-    let value: any = currentTranslations;
+    let value: any = translations;
     
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {

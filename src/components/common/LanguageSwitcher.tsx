@@ -20,6 +20,15 @@ const LanguageSwitcher: React.FC = () => {
   const closeDropdown = () => {
     setIsOpen(false);
   };
+  
+  const handleLanguageChange = (langCode: string) => {
+    if (langCode !== language) {
+      if (confirm('切换语言需要刷新页面，确定继续吗？\nChanging language requires a page reload. Continue?')) {
+        changeLanguage(langCode);
+      }
+    }
+    closeDropdown();
+  };
 
   return (
     <div className="relative">
@@ -44,10 +53,7 @@ const LanguageSwitcher: React.FC = () => {
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => {
-                    changeLanguage(lang.code);
-                    closeDropdown();
-                  }}
+                  onClick={() => handleLanguageChange(lang.code)}
                   className={`flex items-center w-full px-4 py-2 text-sm text-left ${
                     language === lang.code
                       ? 'bg-gray-100 text-gray-900 dark:bg-gray-700 dark:text-white'

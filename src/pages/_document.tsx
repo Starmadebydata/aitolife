@@ -31,6 +31,39 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        
+        {/* 初始语言检测脚本 */}
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              try {
+                // 支持的语言
+                const LANGUAGES = ['zh', 'en'];
+                const DEFAULT_LANGUAGE = 'zh';
+                
+                // 获取已保存的语言偏好
+                const savedLanguage = localStorage.getItem('aitolife_language');
+                
+                // 如果已有语言设置，使用它
+                if (savedLanguage && LANGUAGES.includes(savedLanguage)) {
+                  document.documentElement.lang = savedLanguage;
+                } 
+                // 否则尝试使用浏览器语言
+                else {
+                  const browserLanguage = navigator.language.split('-')[0];
+                  const initialLanguage = LANGUAGES.includes(browserLanguage) 
+                    ? browserLanguage 
+                    : DEFAULT_LANGUAGE;
+                  
+                  document.documentElement.lang = initialLanguage;
+                  localStorage.setItem('aitolife_language', initialLanguage);
+                }
+              } catch (e) {
+                console.error('Language initialization error:', e);
+              }
+            })();
+          `
+        }} />
       </Head>
       <body className="antialiased">
         <Main />
