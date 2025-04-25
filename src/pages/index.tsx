@@ -36,8 +36,8 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
       {/* Hero 部分 */}
       <Hero />
 
-      {/* 应用领域部分 */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      {/* 应用领域部分 (提升位置) */}
+      <section className="py-16 bg-primary-50 dark:bg-primary-900/20"> {/* 尝试不同的背景色 */}
         <div className="container">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
@@ -49,7 +49,8 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {currentApplications.map((application) => (
+            {/* 限制只显示最新的3个应用领域 */}
+            {currentApplications.slice(0, 3).map((application) => (
               <ContentCard
                 key={application.slug}
                 title={application.title}
@@ -62,17 +63,20 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <Link href="/applications" className="btn btn-primary">
-              {t('home.view_all_applications')}
-              <FiArrowRight className="ml-2" />
-            </Link>
-          </div>
+          {/* 如果应用领域多于3个，显示查看全部按钮 */}
+          {currentApplications.length > 3 && (
+            <div className="mt-12 text-center">
+              <Link href="/applications" className="btn btn-primary">
+                {t('home.view_all_applications')}
+                <FiArrowRight className="ml-2" />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
       {/* 工具部分 */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-white dark:bg-gray-900"> {/* 恢复默认背景 */}
         <div className="container">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
@@ -109,7 +113,7 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
       </section>
 
       {/* 博客部分 */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800"> {/* 恢复默认背景 */}
         <div className="container">
           <div className="mb-12 text-center">
             <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
@@ -128,7 +132,7 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
                 description={post.excerpt}
                 slug={post.slug}
                 image={post.coverImage?.fields?.file?.url}
-                date={post.date}
+                date={post.publishedDate} // Changed from post.date
                 category={post.category?.fields?.title}
                 categorySlug={post.category?.fields?.slug}
                 type="blog"

@@ -9,7 +9,7 @@ interface BlogPost {
   slug: string;
   excerpt: string;
   coverImage?: any;
-  date: string;
+  publishedDate: string; // Changed from date
   category?: any;
 }
 
@@ -44,9 +44,9 @@ export default function BlogIndex({ posts }: BlogIndexProps) {
                   key={post.slug}
                   title={post.title}
                   description={post.excerpt}
-                  slug={`/blog/${post.slug}`} // 假设博客详情页路径为 /blog/[slug]
+                  slug={post.slug} // ContentCard 会自动添加 /blog/ 前缀
                   image={post.coverImage?.fields?.file?.url}
-                  date={post.date}
+                  date={post.publishedDate} // Changed from post.date
                   category={post.category?.fields?.title}
                   categorySlug={post.category?.fields?.slug} // 假设分类链接需要slug
                   type="blog"

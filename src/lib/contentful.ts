@@ -7,7 +7,7 @@ interface BlogPostFields {
   excerpt: string;
   content: any;
   coverImage?: any;
-  date: string;
+  publishedDate: string; // Changed from date
   author?: any;
   category?: any;
 }
@@ -68,7 +68,7 @@ export async function getAllPosts(preview: boolean = false): Promise<BlogPostFie
   try {
     const entries = await getClient(preview).getEntries({
       content_type: 'pageBlogPost',
-      order: ['-fields.date'],
+      order: ['-fields.publishedDate'], // Changed from date
       include: 2,
     });
 
@@ -81,7 +81,7 @@ export async function getAllPosts(preview: boolean = false): Promise<BlogPostFie
         excerpt: fields.excerpt || '',
         content: fields.content || {},
         coverImage: fields.coverImage || null,
-        date: fields.date || '',
+        publishedDate: fields.publishedDate || '', // Changed from date
         author: fields.author || null,
         category: fields.category || null,
       } as BlogPostFields;
@@ -110,7 +110,7 @@ export async function getPostBySlug(slug: string, preview: boolean = false): Pro
       excerpt: fields.excerpt || '',
       content: fields.content || {},
       coverImage: fields.coverImage || null,
-      date: fields.date || '',
+      publishedDate: fields.publishedDate || '', // Changed from date
       author: fields.author || null,
       category: fields.category || null,
     } as BlogPostFields;
@@ -286,7 +286,7 @@ export async function getPostsByCategory(categorySlug: string, preview: boolean 
     const entries = await getClient(preview).getEntries({
       content_type: 'pageBlogPost',
       'fields.category.sys.id': category.sys.id,
-      order: ['-fields.date'],
+      order: ['-fields.publishedDate'], // Changed from date
       include: 2,
     });
 
@@ -298,7 +298,7 @@ export async function getPostsByCategory(categorySlug: string, preview: boolean 
         excerpt: fields.excerpt || '',
         content: fields.content || {},
         coverImage: fields.coverImage || null,
-        date: fields.date || '',
+        publishedDate: fields.publishedDate || '', // Changed from date
         author: fields.author || null,
         category: fields.category || null,
       } as BlogPostFields;
