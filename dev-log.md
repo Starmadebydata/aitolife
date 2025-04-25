@@ -154,3 +154,45 @@ AIToLife 是一个介绍 AI 在日常生活应用的平台，旨在帮助用户�
 ---
 
 *日志创建日期：2023年6月15日* 
+---
+
+## 2025-04-25：Contentful 集成与博客页面实现
+
+### 完成的工作
+
+1.  **确定并规划 Contentful 集成**:
+    *   与用户讨论后，确定使用 Contentful 作为项目的内容管理系统。
+    *   制定了详细的 Contentful 集成计划，并创建了 `contentful-integration-plan.md` 文档。
+
+2.  **代码迁移至 Contentful**:
+    *   更新了首页 (`src/pages/index.tsx`)，将原有的模拟数据替换为通过 `getAllPosts`, `getAllTools`, `getAllApplications` 函数从 Contentful 获取真实数据。
+    *   更新了工具详情页 (`src/pages/tools/[slug].tsx`)，使用 `getAllTools` 生成路径，并使用 `getToolBySlug` 获取特定工具的数据，移除了模拟数据。
+    *   更新了工具列表页 (`src/pages/tools/index.tsx`)，使用 `getAllTools` 和 `getAllCategories` 获取数据，移除了模拟数据。
+
+3.  **API 密钥与配置**:
+    *   指导用户安全地将 Contentful Space ID 和 API Access Tokens 配置到 `.env.local` 文件中。
+    *   确认 `.gitignore` 文件包含 `.env.local` 以保证密钥安全。
+
+4.  **修复 Contentful API 错误**:
+    *   解决了本地开发服务器启动时遇到的 `unknownContentType` 错误。
+    *   指导用户在 Contentful 中查找正确的 Content type ID。
+    *   根据用户提供的 ID (`pageBlogPost`, `tool`, `application`, `category`) 更新了 `src/lib/contentful.ts` 文件中的 API 调用。
+
+5.  **创建博客列表页面**:
+    *   发现项目缺少 `/blog` 路径对应的页面文件。
+    *   创建了新的页面文件 `src/pages/blog/index.tsx`。
+    *   在新页面中实现了使用 `getAllPosts` 从 Contentful 获取并展示博客文章列表的功能。
+    *   确认了 `public/locales/en/common.json` 和 `public/locales/zh/common.json` 中已包含新页面所需的翻译键。
+
+6.  **本地测试与指导**:
+    *   成功启动了本地开发服务器 (`npm run dev`)，验证了 Contentful 集成和博客页面的基本功能。
+    *   指导用户如何在 Contentful 中创建内容类型和博客文章条目。
+
+### 下一步计划
+
+1.  在 Contentful 中填充实际内容（博客文章、工具、应用领域、分类、作者等）。
+2.  完善博客文章详情页 (`/blog/[slug].tsx`) 的创建和数据获取逻辑。
+3.  完善应用领域列表页 (`/applications`) 和详情页 (`/applications/[slug].tsx`)。
+4.  根据 Contentful 返回的富文本数据，实现更完善的富文本渲染。
+5.  实现搜索和过滤功能。
+6.  进行全面的测试和性能优化。

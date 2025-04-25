@@ -318,21 +318,13 @@ export default function ToolDetail({ tool }: ToolDetailProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    // 在生产环境中取消下面的注释以获取真实数据
-    // const zhTools = await getAllTools(false);
-    // const paths = zhTools.map((tool) => ({
-    //   params: { slug: tool.slug },
-    // }));
+    // 从Contentful获取所有工具
+    const tools = await getAllTools(false);
     
-    // 使用模拟数据生成路径
-    const paths = [
-      { params: { slug: 'chatgpt' } },
-      { params: { slug: 'midjourney' } },
-      { params: { slug: 'notion-ai' } },
-      { params: { slug: 'jasper' } },
-      { params: { slug: 'dall-e' } },
-      { params: { slug: 'github-copilot' } },
-    ];
+    // 生成路径
+    const paths = tools.map((tool) => ({
+      params: { slug: tool.slug },
+    }));
     
     return {
       paths,
@@ -355,88 +347,23 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     
     const slug = params.slug as string;
     
-    // 在生产环境中取消下面的注释以获取真实数据
-    // const zhTool = await getToolBySlug(slug, false);
-    // const enTool = await getToolBySlug(slug, false);
+    // 从Contentful获取工具数据
+    const zhTool = await getToolBySlug(slug, false);
+    const enTool = await getToolBySlug(slug, false);
     
-    // 模拟数据
-    const mockTools: Record<string, { zh: Tool; en: Tool }> = {
-      'chatgpt': {
-        zh: {
-          title: 'ChatGPT',
-          slug: 'chatgpt',
-          description: '功能强大的AI聊天机器人，可用于对话、写作、编程和生成创意内容。',
-          image: null,
-          rating: 4.8,
-          pricingType: 'freemium',
-          externalUrl: 'https://chat.openai.com',
-          categories: ['通用AI', '写作'],
-          content: {
-            details: 'ChatGPT 是由 OpenAI 开发的大型语言模型，能够理解和生成人类语言。它可以进行对话、回答问题、生成文本、提供解释，甚至能够编写代码和创作内容。ChatGPT 基于 GPT（生成式预训练变换器）架构，通过处理大量文本数据进行训练，使其能够生成连贯、相关且类人的响应。',
-            pros: [
-              '强大的语言理解和生成能力',
-              '多功能应用，从写作到编程',
-              '持续更新和改进',
-              '免费版本可用',
-            ],
-            cons: [
-              '可能产生不准确或幻觉性信息',
-              '高级功能需要付费订阅',
-              '处理敏感话题时可能有限制',
-              '对时效性信息的了解有限',
-            ],
-            alternatives: [
-              'Google Bard',
-              'Claude',
-              'Bing Chat',
-              'Replika',
-            ],
-          },
-        },
-        en: {
-          title: 'ChatGPT',
-          slug: 'chatgpt',
-          description: 'Powerful AI chatbot for conversations, writing, coding, and creative content generation.',
-          image: null,
-          rating: 4.8,
-          pricingType: 'freemium',
-          externalUrl: 'https://chat.openai.com',
-          categories: ['General AI', 'Writing'],
-          content: {
-            details: 'ChatGPT is a large language model developed by OpenAI that can understand and generate human language. It can engage in conversation, answer questions, generate text, provide explanations, and even write code and creative content. ChatGPT is built on the GPT (Generative Pre-trained Transformer) architecture and has been trained on vast amounts of text data to generate coherent, relevant, and human-like responses.',
-            pros: [
-              'Powerful language understanding and generation',
-              'Versatile applications from writing to coding',
-              'Continuous updates and improvements',
-              'Free version available',
-            ],
-            cons: [
-              'May produce inaccurate or hallucinated information',
-              'Advanced features require paid subscription',
-              'Limited in handling sensitive topics',
-              'Limited knowledge of time-sensitive information',
-            ],
-            alternatives: [
-              'Google Bard',
-              'Claude',
-              'Bing Chat',
-              'Replika',
-            ],
-          },
-        },
-      },
-      // 其他工具的模拟数据可以按需添加
-    };
-    
-    // 如果找不到请求的工具，返回通用的404页面
-    if (!mockTools[slug]) {
+    // 如果找不到工具，返回404
+    if (!zhTool && !enTool) {
       return { notFound: true };
     }
     
     return {
       props: {
-        tool: mockTools[slug],
-      }
+        tool: {
+          zh: zhTool,
+          en: enTool,
+        },
+      },
+      revalidate: 3600, // 每小时重新生成一次
     };
   } catch (error) {
     console.error(`Error fetching tool with slug ${params?.slug}:`, error);

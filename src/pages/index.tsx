@@ -6,6 +6,7 @@ import ContentCard from '@components/features/ContentCard';
 import ToolCard from '@components/features/ToolCard';
 import { FiArrowRight, FiBookOpen, FiTool, FiHome } from 'react-icons/fi';
 import Link from 'next/link';
+import { getAllPosts, getAllTools, getAllApplications } from '@lib/contentful';
 
 interface HomePageProps {
   posts: {
@@ -222,186 +223,30 @@ export default function Home({ posts, tools, applications }: HomePageProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    // 由于我们是创建MVP版本，这里使用模拟数据
-    // 中文内容
-    const zhPosts = [
-      {
-        title: 'AI如何改变我们的日常生活',
-        slug: 'ai-changing-daily-life',
-        excerpt: '探索人工智能如何逐渐渗透到我们的日常生活，从智能家居到个人助手，AI正在改变我们的生活方式。',
-        coverImage: null,
-        date: '2023-04-15',
-        category: { fields: { title: '趋势', slug: 'trends' } },
-      },
-      {
-        title: '5个必备的AI写作工具推荐',
-        slug: 'top-5-ai-writing-tools',
-        excerpt: '提高写作效率的5个顶级AI写作工具，无论是博客写作、内容创作还是学术论文，这些工具都能帮助你事半功倍。',
-        coverImage: null,
-        date: '2023-05-22',
-        category: { fields: { title: '工具', slug: 'tools' } },
-      },
-      {
-        title: 'AI助手如何帮助提高工作效率',
-        slug: 'ai-assistants-productivity',
-        excerpt: '了解如何利用AI助手自动化重复性任务，管理日程安排，以及简化工作流程，从而显著提高工作效率。',
-        coverImage: null,
-        date: '2023-06-10',
-        category: { fields: { title: '生产力', slug: 'productivity' } },
-      },
-    ];
-
-    const zhTools = [
-      {
-        title: 'ChatGPT',
-        slug: 'chatgpt',
-        description: '功能强大的AI聊天机器人，可用于对话、写作、编程和生成创意内容。',
-        image: null,
-        rating: 4.8,
-        pricingType: 'freemium',
-        externalUrl: 'https://chat.openai.com',
-        categories: [{ fields: { title: '通用AI' } }, { fields: { title: '写作' } }],
-      },
-      {
-        title: 'Midjourney',
-        slug: 'midjourney',
-        description: '先进的AI图像生成工具，能够创建令人惊叹的艺术作品和视觉内容。',
-        image: null,
-        rating: 4.7,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.midjourney.com',
-        categories: [{ fields: { title: '图像生成' } }, { fields: { title: '设计' } }],
-      },
-      {
-        title: 'Notion AI',
-        slug: 'notion-ai',
-        description: '集成在Notion平台中的AI助手，可帮助写作、总结和组织信息。',
-        image: null,
-        rating: 4.5,
-        pricingType: 'paid',
-        externalUrl: 'https://www.notion.so',
-        categories: [{ fields: { title: '写作' } }, { fields: { title: '生产力' } }],
-      },
-    ];
-
-    const zhApplications = [
-      {
-        title: '家庭生活中的AI应用',
-        slug: 'ai-in-home-life',
-        description: '探索AI如何改善家庭生活，从智能家居设备到家庭管理助手，让家庭生活更轻松。',
-        image: null,
-      },
-      {
-        title: 'AI在健康与健身中的应用',
-        slug: 'ai-in-health-fitness',
-        description: '了解AI如何帮助监测健康状况、制定个性化锻炼计划和改善整体健康状况。',
-        image: null,
-      },
-      {
-        title: 'AI辅助个人财务管理',
-        slug: 'ai-in-personal-finance',
-        description: '探索AI工具如何帮助预算规划、投资决策和优化个人财务状况。',
-        image: null,
-      },
-    ];
-
-    // 英文内容
-    const enPosts = [
-      {
-        title: 'How AI is Changing Our Daily Lives',
-        slug: 'ai-changing-daily-life',
-        excerpt: 'Explore how artificial intelligence is gradually permeating our daily lives, from smart homes to personal assistants, AI is changing how we live.',
-        coverImage: null,
-        date: '2023-04-15',
-        category: { fields: { title: 'Trends', slug: 'trends' } },
-      },
-      {
-        title: 'Top 5 AI Writing Tools You Need',
-        slug: 'top-5-ai-writing-tools',
-        excerpt: 'Discover the top 5 AI writing tools to boost your writing efficiency, whether for blog posts, content creation, or academic papers.',
-        coverImage: null,
-        date: '2023-05-22',
-        category: { fields: { title: 'Tools', slug: 'tools' } },
-      },
-      {
-        title: 'How AI Assistants Help Improve Productivity',
-        slug: 'ai-assistants-productivity',
-        excerpt: 'Learn how to use AI assistants to automate repetitive tasks, manage schedules, and streamline workflows to significantly increase productivity.',
-        coverImage: null,
-        date: '2023-06-10',
-        category: { fields: { title: 'Productivity', slug: 'productivity' } },
-      },
-    ];
-
-    const enTools = [
-      {
-        title: 'ChatGPT',
-        slug: 'chatgpt',
-        description: 'Powerful AI chatbot for conversations, writing, coding, and creative content generation.',
-        image: null,
-        rating: 4.8,
-        pricingType: 'freemium',
-        externalUrl: 'https://chat.openai.com',
-        categories: [{ fields: { title: 'General AI' } }, { fields: { title: 'Writing' } }],
-      },
-      {
-        title: 'Midjourney',
-        slug: 'midjourney',
-        description: 'Advanced AI image generation tool that creates stunning artwork and visual content.',
-        image: null,
-        rating: 4.7,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.midjourney.com',
-        categories: [{ fields: { title: 'Image Generation' } }, { fields: { title: 'Design' } }],
-      },
-      {
-        title: 'Notion AI',
-        slug: 'notion-ai',
-        description: 'AI assistant integrated into the Notion platform to help with writing, summarizing, and organizing information.',
-        image: null,
-        rating: 4.5,
-        pricingType: 'paid',
-        externalUrl: 'https://www.notion.so',
-        categories: [{ fields: { title: 'Writing' } }, { fields: { title: 'Productivity' } }],
-      },
-    ];
-
-    const enApplications = [
-      {
-        title: 'AI in Home Life',
-        slug: 'ai-in-home-life',
-        description: 'Explore how AI improves home life, from smart home devices to home management assistants, making daily living easier.',
-        image: null,
-      },
-      {
-        title: 'AI in Health and Fitness',
-        slug: 'ai-in-health-fitness',
-        description: 'Learn how AI helps monitor health, create personalized fitness plans, and improve overall well-being.',
-        image: null,
-      },
-      {
-        title: 'AI-Assisted Personal Finance',
-        slug: 'ai-in-personal-finance',
-        description: 'Explore how AI tools help with budget planning, investment decisions, and optimizing personal finances.',
-        image: null,
-      },
-    ];
+    // 从Contentful获取数据
+    const posts = {
+      zh: await getAllPosts(false),
+      en: await getAllPosts(false)
+    };
+    
+    const tools = {
+      zh: await getAllTools(false),
+      en: await getAllTools(false)
+    };
+    
+    const applications = {
+      zh: await getAllApplications(false),
+      en: await getAllApplications(false)
+    };
 
     return {
       props: {
-        posts: {
-          zh: zhPosts,
-          en: enPosts
-        },
-        tools: {
-          zh: zhTools,
-          en: enTools
-        },
-        applications: {
-          zh: zhApplications,
-          en: enApplications
-        },
+        posts,
+        tools,
+        applications,
       },
+      // 如果使用Vercel，可以启用ISR
+      revalidate: 3600, // 每小时重新生成一次
     };
   } catch (error) {
     console.error('Error fetching data:', error);

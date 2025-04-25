@@ -20,7 +20,7 @@ AIToLife 是一个帮助用户了解如何在日常生活中应用 AI 技术的�
 - **样式**: [Tailwind CSS](https://tailwindcss.com/)
 - **国际化**: 客户端 i18n 实现 (localStorage)
 - **CMS**: [Contentful](https://www.contentful.com/)
-- **部署**: [Cloudflare Pages](https://pages.cloudflare.com/)
+- **部署**: [Vercel](https://vercel.com/)
 - **图标**: [React Icons](https://react-icons.github.io/react-icons/)
 
 ## 🚀 快速开始
@@ -49,7 +49,7 @@ yarn install
 
 3. 创建环境变量
 
-复制 `.env.local.example` 文件为 `.env.local` 并填入你的配置信息。
+复制 `.env.local.example` 文件为 `.env.local` 并填入你的 **Contentful Space ID** 和 **API Access Tokens**。详情请参考 `.env.local.example` 文件中的注释。
 
 ```bash
 cp .env.local.example .env.local
@@ -67,9 +67,7 @@ yarn dev
 
 ## 📦 构建与部署
 
-### 静态导出
-
-本项目配置为静态导出模式，以便于在 Cloudflare Pages 或其他静态托管服务上部署：
+### 构建
 
 ```bash
 npm run build
@@ -77,24 +75,25 @@ npm run build
 yarn build
 ```
 
-构建输出位于 `out` 目录中。
+构建输出位于 `.next` 目录中。
 
-### Cloudflare Pages 部署说明
+### Vercel 部署说明
 
-1. 在 Cloudflare Pages 中创建新项目
-2. 连接到 GitHub 仓库
-3. 构建设置:
-   - 构建命令: `npm run build`
-   - 输出目录: `out`
-   - Node.js 版本: 16 或更高
+本项目推荐使用 [Vercel](https://vercel.com/) 进行部署，以充分利用 Next.js 的特性（如 ISR）。
+
+1.  将项目推送到 GitHub/GitLab/Bitbucket 仓库。
+2.  在 Vercel 上创建一个新项目，并连接到您的 Git 仓库。
+3.  Vercel 通常会自动检测到 Next.js 项目并配置好构建设置。
+4.  **重要**: 在 Vercel 项目的 **Settings -> Environment Variables** 中添加与 `.env.local` 文件中相同的环境变量（特别是 Contentful API 密钥）。
+5.  触发部署。Vercel 将自动构建和部署您的应用。
 
 ## 🌐 国际化实现
 
-项目最初使用 Next.js 的内置国际化路由，但由于静态导出模式的限制，我们改为使用基于客户端的语言切换实现：
+项目使用基于客户端的语言切换实现：
 
-- 使用 `localStorage` 存储用户语言偏好
-- 支持浏览器语言自动检测
-- 动态加载对应语言的翻译文件
+- 使用 `localStorage` 存储用户语言偏好。
+- 支持浏览器语言自动检测。
+- 动态加载对应语言的翻译文件 (`public/locales/`)。
 
 ## 📂 项目结构
 
@@ -112,6 +111,7 @@ aitolife/
 │   └── lib/           # 库函数
 ├── .env.local.example # 环境变量示例
 ├── next.config.js     # Next.js 配置
+├── .next/             # 构建输出目录
 └── tailwind.config.js # Tailwind CSS 配置
 ```
 

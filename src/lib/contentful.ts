@@ -67,7 +67,7 @@ const getClient = (preview: boolean) => (preview ? previewClient : client);
 export async function getAllPosts(preview: boolean = false): Promise<BlogPostFields[]> {
   try {
     const entries = await getClient(preview).getEntries({
-      content_type: 'blogPost',
+      content_type: 'pageBlogPost',
       order: ['-fields.date'],
       include: 2,
     });
@@ -96,7 +96,7 @@ export async function getAllPosts(preview: boolean = false): Promise<BlogPostFie
 export async function getPostBySlug(slug: string, preview: boolean = false): Promise<BlogPostFields | null> {
   try {
     const entries = await getClient(preview).getEntries({
-      content_type: 'blogPost',
+      content_type: 'pageBlogPost',
       'fields.slug': slug,
       include: 2,
     });
@@ -284,7 +284,7 @@ export async function getPostsByCategory(categorySlug: string, preview: boolean 
     if (!category || !category.sys) return [];
 
     const entries = await getClient(preview).getEntries({
-      content_type: 'blogPost',
+      content_type: 'pageBlogPost',
       'fields.category.sys.id': category.sys.id,
       order: ['-fields.date'],
       include: 2,

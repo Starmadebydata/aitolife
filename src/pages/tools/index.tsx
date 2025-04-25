@@ -347,174 +347,23 @@ export default function ToolsPage({ tools, categories }: ToolsPageProps) {
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    // 在生产环境中取消下面的注释以获取真实数据
-    // const zhTools = await getAllTools(false);
-    // const enTools = await getAllTools(false);
-    // const categories = await getAllCategories(false);
+    // 从Contentful获取工具和分类
+    const zhTools = await getAllTools(false);
+    const enTools = await getAllTools(false);
+    const categories = await getAllCategories(false);
     
-    // 使用模拟数据
-    // 中文工具
-    const zhTools = [
-      {
-        title: 'ChatGPT',
-        slug: 'chatgpt',
-        description: '功能强大的AI聊天机器人，可用于对话、写作、编程和生成创意内容。',
-        image: null,
-        rating: 4.8,
-        pricingType: 'freemium',
-        externalUrl: 'https://chat.openai.com',
-        categories: ['通用AI', '写作'],
-        createdAt: '2022-11-30',
-      },
-      {
-        title: 'Midjourney',
-        slug: 'midjourney',
-        description: '先进的AI图像生成工具，能够创建令人惊叹的艺术作品和视觉内容。',
-        image: null,
-        rating: 4.7,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.midjourney.com',
-        categories: ['图像生成', '设计'],
-        createdAt: '2022-07-12',
-      },
-      {
-        title: 'Notion AI',
-        slug: 'notion-ai',
-        description: '集成在Notion平台中的AI助手，可帮助写作、总结和组织信息。',
-        image: null,
-        rating: 4.5,
-        pricingType: 'paid',
-        externalUrl: 'https://www.notion.so',
-        categories: ['写作', '生产力'],
-        createdAt: '2023-01-15',
-      },
-      {
-        title: 'Jasper',
-        slug: 'jasper',
-        description: '专业的AI写作助手，可用于创建博客文章、社交媒体内容和营销文案。',
-        image: null,
-        rating: 4.6,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.jasper.ai',
-        categories: ['写作', '营销'],
-        createdAt: '2021-08-03',
-      },
-      {
-        title: 'DALL-E',
-        slug: 'dall-e',
-        description: 'OpenAI开发的AI图像生成工具，可根据文本描述创建高质量图像。',
-        image: null,
-        rating: 4.7,
-        pricingType: 'paid',
-        externalUrl: 'https://labs.openai.com',
-        categories: ['图像生成', '设计'],
-        createdAt: '2022-04-06',
-      },
-      {
-        title: 'Copilot',
-        slug: 'github-copilot',
-        description: 'GitHub的AI编程助手，可提供代码建议和自动完成功能。',
-        image: null,
-        rating: 4.9,
-        pricingType: 'subscription',
-        externalUrl: 'https://github.com/features/copilot',
-        categories: ['编程', '开发工具'],
-        createdAt: '2022-06-21',
-      },
-    ];
-
-    // 英文工具
-    const enTools = [
-      {
-        title: 'ChatGPT',
-        slug: 'chatgpt',
-        description: 'Powerful AI chatbot for conversations, writing, coding, and creative content generation.',
-        image: null,
-        rating: 4.8,
-        pricingType: 'freemium',
-        externalUrl: 'https://chat.openai.com',
-        categories: ['General AI', 'Writing'],
-        createdAt: '2022-11-30',
-      },
-      {
-        title: 'Midjourney',
-        slug: 'midjourney',
-        description: 'Advanced AI image generation tool that creates stunning artwork and visual content.',
-        image: null,
-        rating: 4.7,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.midjourney.com',
-        categories: ['Image Generation', 'Design'],
-        createdAt: '2022-07-12',
-      },
-      {
-        title: 'Notion AI',
-        slug: 'notion-ai',
-        description: 'AI assistant integrated into the Notion platform to help with writing, summarizing, and organizing information.',
-        image: null,
-        rating: 4.5,
-        pricingType: 'paid',
-        externalUrl: 'https://www.notion.so',
-        categories: ['Writing', 'Productivity'],
-        createdAt: '2023-01-15',
-      },
-      {
-        title: 'Jasper',
-        slug: 'jasper',
-        description: 'Professional AI writing assistant for creating blog posts, social media content, and marketing copy.',
-        image: null,
-        rating: 4.6,
-        pricingType: 'subscription',
-        externalUrl: 'https://www.jasper.ai',
-        categories: ['Writing', 'Marketing'],
-        createdAt: '2021-08-03',
-      },
-      {
-        title: 'DALL-E',
-        slug: 'dall-e',
-        description: 'AI image generation tool developed by OpenAI that creates images from textual descriptions.',
-        image: null,
-        rating: 4.7,
-        pricingType: 'paid',
-        externalUrl: 'https://labs.openai.com',
-        categories: ['Image Generation', 'Design'],
-        createdAt: '2022-04-06',
-      },
-      {
-        title: 'Copilot',
-        slug: 'github-copilot',
-        description: 'AI programming assistant from GitHub that provides code suggestions and autocompletion.',
-        image: null,
-        rating: 4.9,
-        pricingType: 'subscription',
-        externalUrl: 'https://github.com/features/copilot',
-        categories: ['Programming', 'Development Tools'],
-        createdAt: '2022-06-21',
-      },
-    ];
-
-    // 分类
-    const zhCategories = [
-      { id: '1', title: '通用AI', slug: 'general-ai' },
-      { id: '2', title: '写作', slug: 'writing' },
-      { id: '3', title: '图像生成', slug: 'image-generation' },
-      { id: '4', title: '设计', slug: 'design' },
-      { id: '5', title: '生产力', slug: 'productivity' },
-      { id: '6', title: '编程', slug: 'programming' },
-      { id: '7', title: '营销', slug: 'marketing' },
-      { id: '8', title: '开发工具', slug: 'development-tools' },
-    ];
-
-    const enCategories = [
-      { id: '1', title: 'General AI', slug: 'general-ai' },
-      { id: '2', title: 'Writing', slug: 'writing' },
-      { id: '3', title: 'Image Generation', slug: 'image-generation' },
-      { id: '4', title: 'Design', slug: 'design' },
-      { id: '5', title: 'Productivity', slug: 'productivity' },
-      { id: '6', title: 'Programming', slug: 'programming' },
-      { id: '7', title: 'Marketing', slug: 'marketing' },
-      { id: '8', title: 'Development Tools', slug: 'development-tools' },
-    ];
+    // 将分类转换为前端需要的格式
+    const zhCategories = categories.map(cat => ({
+      id: cat.sys.id,
+      title: cat.title,
+      slug: cat.slug,
+    }));
+    
+    const enCategories = categories.map(cat => ({
+      id: cat.sys.id,
+      title: cat.title,
+      slug: cat.slug,
+    }));
 
     return {
       props: {
